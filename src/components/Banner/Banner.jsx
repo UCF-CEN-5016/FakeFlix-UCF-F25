@@ -14,89 +14,131 @@ import { selectTrendingMovies, selectNetflixMovies } from "../../redux/movies/mo
 import { selectNetflixSeries } from "../../redux/series/series.selectors";
 
 const Banner = ({ type }) => {
-	let selector;
-	switch (type) {
-		case "movies":
-			selector = selectTrendingMovies;
-			break;
-		case "series":
-			selector = selectNetflixSeries;
-			break;
-		default:
-			selector = selectNetflixMovies;
-			break;
-	}
+  // Determine which Redux selector to use based on the type prop
+  let selector;
+  switch (type) {
+    case 'movies':
+      selector = selectTrendingMovies;
+      break;
+    case 'series':
+      selector = selectNetflixSeries;
+      break;
+    default:
+      selector = selectNetflixMovies;
+      break;
+  }
 
-	const myData = useSelector(selector);
-	const { loading, error, data: results } = myData;
-	const finalData = results[randomize(results)];
-	const fallbackTitle = finalData?.title || finalData?.name || finalData?.original_name;
-	const description = truncate(finalData?.overview, 150);
-	const dispatch = useDispatch();
+  // Get data from Redux store using the selected selector
+  const myData = useSelector(selector);
+  const { loading, error, data: results } = myData;
 
-	const handlePlayAnimation = event => {
-		event.stopPropagation();
-	};
+  // Randomly select one item from the results array to feature in the banner
+  const finalData = results[randomize(results)];
 
-	const handleModalOpening = () => {
-		dispatch(showModalDetail({ ...finalData, fallbackTitle }));
-	}
+  // Determine the display title (different content types use different title properties)
+  const fallbackTitle =
+    finalData?.title || finalData?.name || finalData?.original_name;
 
-	return (
-		<>
-			<motion.section
-				variants={bannerFadeInLoadSectionVariants}
-				initial='initial'
-				animate='animate'
-				exit='exit'
-				className="Banner__loadsection"
-			>
-				{loading && <SkeletonBanner />}
-				{error && <div className="errored">Oops, an error occurred.</div>}
-			</motion.section>
+  // Truncate the overview text to 150 characters for consistent display
+  const description = truncate(finalData?.overview, 150);
 
-			{!loading && finalData && (
-				<motion.header
-					variants={bannerFadeInVariants}
-					initial='initial'
-					animate='animate'
-					exit='exit'
-					className="Banner"
-					style={{backgroundImage: `url(${BASE_IMG_URL}/${finalData?.backdrop_path})`}}
-				>
-					<motion.div
-						className="Banner__content"
-						variants={staggerOne}
-						initial='initial'
-						animate='animate'
-						exit='exit'
-					>
-						<motion.h1 variants={bannerFadeInUpVariants} className="Banner__content--title">{fallbackTitle}</motion.h1>
-						<motion.div variants={bannerFadeInUpVariants} className="Banner__buttons">
-							<Link
-								className="Banner__button"
-								onClick={handlePlayAnimation}
-								to={"/play"}
-							>
-								<FaPlay />
-								<span>Play</span>
-							</Link>
-							<button
-								className="Banner__button"
-								onClick={handleModalOpening}
-							>
-								<BiInfoCircle size="1.5em" />
-								<span>More info</span>
-							</button>
-						</motion.div>
-						<motion.p variants={bannerFadeInUpVariants} className="Banner__content--description">{description}</motion.p>
-					</motion.div>
-					<div className="Banner__panel" />
-					<div className="Banner__bottom-shadow" />
-				</motion.header>
-			)}
-		</>
-	)
+  // Get the dispatch function to send actions to the Redux store
+  const dispatch = useDispatch();
+
+  // Prevent event bubbling when play button is clicked
+  const handlePlayAnimation = (event) => {
+    event.stopPropagation();
+  };
+
+  // Open modal with detailed information about the selected content
+  const handleModalOpening = () => {
+    dispatch(showModalDetail({ ...finalData, fallbackTitle }));
+  };
+
+  return (
+    <>
+      {/* Loading and error section - shows skeleton or error message */}
+      <motion.section
+        variants={bannerFadeInLoadSectionVariants}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        className='Banner__loadsection'
+      >
+        {loading && <SkeletonBanner />}
+        {error && <div className='errored'>Oops, an error occurred.</div>}
+      </motion.section>
+
+      {/* Main banner section - only renders when not loading and data is available */}
+      {!loading && finalData && (
+        <motion.header
+          variants={bannerFadeInVariants}
+          initial='initial'
+          animate='animate'
+          exit='exit'
+          className='Banner'
+          style={{
+            backgroundImage: `url(${BASE_IMG_URL}/${finalData?.backdrop_path})`,
+          }}
+        >
+          {/* Content section with staggered animation for child elements */}
+          <motion.div
+            className='Banner__content'
+            variants={staggerOne}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+          >
+            {/* Title */}
+            <motion.h1
+              variants={bannerFadeInUpVariants}
+              className='Banner__content--title'
+            >
+              {fallbackTitle}
+            </motion.h1>
+
+            {/* Action buttons container */}
+            <motion.div
+              variants={bannerFadeInUpVariants}
+              className='Banner__buttons'
+            >
+              {/* Play button */}
+              <Link
+                className='Banner__button'
+                onClick={handlePlayAnimation}
+                to={'/play'}
+              >
+                <FaPlay />
+                <span>Play</span>
+              </Link>
+
+              {/* More info button */}
+              <button
+                className='Banner__button'
+                onClick={handleModalOpening}
+              >
+                <BiInfoCircle size='1.5em' />
+                <span>More info</span>
+              </button>
+            </motion.div>
+
+            {/* Description text */}
+            <motion.p
+              variants={bannerFadeInUpVariants}
+              className='Banner__content--description'
+            >
+              {description}
+            </motion.p>
+          </motion.div>
+
+          {/* Decorative panel and shadow elements */}
+          <div className='Banner__panel' />
+          <div className='Banner__bottom-shadow' />
+        </motion.header>
+      )}
+    </>
+  );
 }
 
+// Memoize component to prevent unnecessary re-renders when props haven't changed
 export default React.memo(Banner);
