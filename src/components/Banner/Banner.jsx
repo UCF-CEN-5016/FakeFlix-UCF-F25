@@ -13,6 +13,11 @@ import { showModalDetail } from "../../redux/modal/modal.actions";
 import { selectTrendingMovies, selectNetflixMovies } from "../../redux/movies/movies.selectors";
 import { selectNetflixSeries } from "../../redux/series/series.selectors";
 
+/**
+ * Banner component displays a featured movie/series with background image,
+ * title, description, and action buttons. Content is randomly selected
+ * from the specified data type (movies, series, or trending movies).
+ */
 const Banner = ({ type }) => {
   // Determine which Redux selector to use based on the type prop
   let selector;
