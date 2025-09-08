@@ -33,6 +33,18 @@ const SignIn = () => {
     mode: "onTouched",
   });
 
+	/**
+	 * onSubmit function handles when the form gets submitted for email / password authentication only
+	 * 
+	 * Grabs email and password from form data and dispatches the Redux action to start email sign-in process. 
+	 * 
+	 * To clarify this function only gets called when user clicks "Sign in" button, not Google or anonymous sign-in buttons.
+	 * When those are clicked since they are type "button", onSubmit gets skipped entirely and dispatches for Google sign-in and
+	 * anonymous sign-in get called depending on which button user clicks.
+	 * 
+	 * @param {Object} data - Form data that contains the users email and password they typed in
+	 * @returns {void} - Does not return anything
+	 */
   const onSubmit = (data) => {
     const { email, password } = data;
     dispatch(emailSignInStart({ email, password }));
