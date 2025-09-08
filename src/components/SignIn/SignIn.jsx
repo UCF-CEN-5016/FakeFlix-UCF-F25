@@ -14,6 +14,17 @@ import Loader from "../Loader/Loader";
 import "./signIn.scss";
 
 /**
+ * SignIn Component File Overall Summary
+ * 
+ * This file contains a React component that renders a complete sign-in form with multiple 
+ * authentication options. Users can authenticate using email/password, Google account, 
+ * or anonymously. The component includes form validation, loading states, error handling,
+ * and smooth animations. It integrates React Hook Form for form management, Redux for 
+ * state management, and Framer Motion for animations.
+ */
+
+
+/**
  * SignIn - This is the main component in this file that when called elsewhere in our codebase will render the sign-in form for users to see
  *
  * Creates a form with password/email inputs and three sign in options:
