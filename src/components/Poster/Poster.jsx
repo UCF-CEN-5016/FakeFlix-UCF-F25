@@ -38,6 +38,8 @@ const Poster = result => {
         event.stopPropagation();
     };
 
+    // This return function renders the poster component with all its details and buttons.
+    // It displays the media item's image (with fallback handling if the image is unavailable), along with an information overlay containing interactive controls, title, and genres.
     return (
         <motion.div
             variants={posterFadeInVariants}
