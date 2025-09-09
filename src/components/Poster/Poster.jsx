@@ -17,6 +17,8 @@ const Poster = result => {
     const genresConverted = useGenreConversion(genre_ids); // Converts genre IDs to human-readable genre names using a custom hook
     const dispatch = useDispatch(); // Provides access to the Redux dispatch function for state management
 
+    // Handlers that import the add/remove events from the redux folder, which adds/removes items from favourites.
+    // These handlers also stop any other event propagation to avoid triggering other click events.
     const handleAdd = event => {
         event.stopPropagation();
         dispatch(addToFavourites({ ...item, isFavourite }));
@@ -26,10 +28,12 @@ const Poster = result => {
         dispatch(removeFromFavourites({ ...item, isFavourite }));
     };
 
+    // Handler that opens the modal view when the thumbnail is clicked in the main menu, passing in the item details as props.
     const handleModalOpening = () => {
         dispatch(showModalDetail({ ...item, fallbackTitle, genresConverted, isFavourite }));
     }
 
+    // Handler that closes the modal view when the play button is clicked.
     const handlePlayAction = event => {
         event.stopPropagation();
     };
