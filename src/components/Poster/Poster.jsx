@@ -9,12 +9,16 @@ import { useDispatch } from "react-redux";
 import { addToFavourites, removeFromFavourites } from "../../redux/favourites/favourites.actions";
 import { Link } from "react-router-dom";
 
+// This code is the component that renders each movie/TV show poster in a modal view when the thumbnail is clicked in the main menu.
+// It displays the media item's image and description, along with interactive controls for playing content, and adding/removing from favorites. The component also handles fallback content when images are not available and manages user interactions with the media item.
 const Poster = result => {
     const { item, item: { title, original_name, original_title, name, genre_ids, backdrop_path }, isFavourite } = result;
-    let fallbackTitle = title || original_title || name || original_name;
-    const genresConverted = useGenreConversion(genre_ids);
-    const dispatch = useDispatch();
+    let fallbackTitle = title || original_title || name || original_name; // Creates a backup title using whichever title property is available in the data
+    const genresConverted = useGenreConversion(genre_ids); // Converts genre IDs to human-readable genre names using a custom hook
+    const dispatch = useDispatch(); // Provides access to the Redux dispatch function for state management
 
+    // Handlers that import the add/remove events from the redux folder, which adds/removes items from favourites.
+    // These handlers also stop any other event propagation to avoid triggering other click events.
     const handleAdd = event => {
         event.stopPropagation();
         dispatch(addToFavourites({ ...item, isFavourite }));
@@ -24,14 +28,18 @@ const Poster = result => {
         dispatch(removeFromFavourites({ ...item, isFavourite }));
     };
 
+    // Handler that opens the modal view when the thumbnail is clicked in the main menu, passing in the item details as props.
     const handleModalOpening = () => {
         dispatch(showModalDetail({ ...item, fallbackTitle, genresConverted, isFavourite }));
     }
 
+    // Handler that closes the modal view when the play button is clicked.
     const handlePlayAction = event => {
         event.stopPropagation();
     };
 
+    // This return function renders the poster component with all its details and buttons.
+    // It displays the media item's image (with fallback handling if the image is unavailable), along with an information overlay containing interactive controls, title, and genres.
     return (
         <motion.div
             variants={posterFadeInVariants}
