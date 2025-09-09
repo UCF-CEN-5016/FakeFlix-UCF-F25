@@ -8,18 +8,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUpStart } from "../../redux/auth/auth.actions";
 import { selectAuthLoadingState } from "../../redux/auth/auth.selectors";
 
+/*
+	The overall functionality of SignUp.jsx is to:
+
+	1. ...
+*/
+
 const SignUp = () => {
+
+	// Detects if the webpage is loading and when the signup form is selected
 	const dispatch = useDispatch();
 	const isLoading = useSelector(selectAuthLoadingState);
 	const { register, handleSubmit, errors, getValues } = useForm({
 		mode: "onTouched"
 	})
 
+	// Sends inputted data to web server via node dispatch function when called
 	const onSubmit = data => {
 		const { displayName, email, password } = data;
 		dispatch(signUpStart({ displayName, email, password }));
 	}
 
+	/*
+		This section contains the HTML elements for the following features:
+
+		1. SignUp form
+		2. Name input field (text)
+		3. Email input field (text)
+		4. Password entry (text) and confirmation (text) fields
+		5. Form submission (button)
+	*/
 	return (
 		<motion.form
 			variants={staggerOne}
