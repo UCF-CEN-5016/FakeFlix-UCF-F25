@@ -1,3 +1,8 @@
+/**
+ * The file contains a custom React Hook to retrieve category data based on the 
+ * current route ("browse", "movies", "tvseries", "popular") and category name.
+ */
+
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchMovieDataConfig, fetchPopularDataConfig, fetchSeriesDataConfig } from "../dataConfig";
