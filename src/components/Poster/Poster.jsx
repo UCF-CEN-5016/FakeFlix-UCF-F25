@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { addToFavourites, removeFromFavourites } from "../../redux/favourites/favourites.actions";
 import { Link } from "react-router-dom";
 
+// This code is the component that renders each movie/TV show poster in a modal view when the thumbnail is clicked in the main menu.
+// It displays the media item's image and description, along with interactive controls for playing content, and adding/removing from favorites. The component also handles fallback content when images are not available and manages user interactions with the media item.
 const Poster = result => {
     const { item, item: { title, original_name, original_title, name, genre_ids, backdrop_path }, isFavourite } = result;
     let fallbackTitle = title || original_title || name || original_name;
