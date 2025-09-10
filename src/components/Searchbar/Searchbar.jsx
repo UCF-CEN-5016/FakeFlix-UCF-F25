@@ -19,6 +19,17 @@ const Searchbar = () => {
   const searchbarRef = useRef();
   const searchInputRef = useRef();
 
+  /**
+   * Close the search bar when clicking outside of it.
+   *
+   * Attaches an outside-click listener on `searchbarRef`.
+   * If the search bar is open, it clears the search input
+   * and toggles the search bar closed.
+   *
+   * @function useOutsideClick
+   * @param {React.RefObject<HTMLElement>} searchbarRef - Ref to the search bar element.
+   * @param {() => void} handler - Callback invoked when an outside click occurs.
+   */
   useOutsideClick(searchbarRef, () => {
     if (searchInputToggle) {
       setSearchInput("");
@@ -36,7 +47,6 @@ const Searchbar = () => {
     searchInputRef.current.focus();
     setSearchInputToggle(!searchInputToggle);
   };
-  
 
   /**
    * Clear the search input, reset Redux search state, and redirect to /browse.
@@ -74,6 +84,7 @@ const Searchbar = () => {
   // The component's JSX structure.
   return (
     <div className="Searchbar" ref={searchbarRef}>
+      {/* Search input field */}
       <input
         type="text"
         placeholder="Search titles, people"
@@ -85,6 +96,7 @@ const Searchbar = () => {
         }`} // Dynamically applies an "active" class based on the `searchInputToggle` state.
       />
 
+      {/* Search toggle icon (opens/closes search bar) */}
       <div className="Searchbar--toggler" onClick={handleSearchInputToggle}>
         <FiSearch size="1.5em" />
       </div>
@@ -94,7 +106,7 @@ const Searchbar = () => {
         className={`Searchbar--clear ${
           searchInputToggle && searchInput.length && "typing"
         }`}
-        onClick={clearSearchInputToggle} // Calls the function to clear the search input state
+        onClick={clearSearchInputToggle} // Calls the function to clear the search input, resets state and redirect appropiately
       >
         <RiCloseFill />
       </div>
