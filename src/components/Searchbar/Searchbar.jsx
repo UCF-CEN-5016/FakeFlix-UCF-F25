@@ -72,9 +72,9 @@ const Searchbar = () => {
 
   /**
    * Handle search input changes:
-   * - Updates local and Redux state.
-   * - If non-empty, navigates to `/search?q=<value>` and dispatches a search.
-   * - If empty, redirects to `/browse`.
+   * - Updates local and Redux value of the search input.
+   * - If non-empty, navigates to `/search?q=<value>` and dispatches an action to fetch search results.
+   * - If empty, redirects to `/browse` page.
    *
    * @function handleSearchInput
    * @param {React.ChangeEvent<HTMLInputElement>} event - The input change event.
@@ -111,7 +111,7 @@ const Searchbar = () => {
         <FiSearch size="1.5em" />
       </div>
 
-      {/* /The clear icon, which is only visible when the searchInputToggle is true and the length of the search input has a value */}
+      {/* /The clear icon, which is only visible via class `typing` when the searchInputToggle is true and the length of the search input has a value */}
       <div
         className={`Searchbar--clear ${
           searchInputToggle && searchInput.length && "typing"
