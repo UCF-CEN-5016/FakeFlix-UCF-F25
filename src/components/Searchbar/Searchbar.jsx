@@ -1,3 +1,9 @@
+/*
+    The searchbar component provides functions to open and
+    close search bar, update and clear search text, and navigate
+    to search or browse page when necessary.
+*/
+
 import "./searchbar.scss"
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -16,6 +22,11 @@ const Searchbar = () => {
     const searchbarRef = useRef();
     const searchInputRef = useRef();
 
+    /*
+        This hook listens for clicks outside of
+        searchbarRef. If triggered while the search input
+        is open, it clears the field and closes search.
+    */
     useOutsideClick(searchbarRef, () => {
         if (searchInputToggle) {
             setSearchInput("");
@@ -23,17 +34,37 @@ const Searchbar = () => {
         }
     });
 
+    /*
+        This function toggles the visibility of
+        the search input field. It puts focus on
+        the input element when opened.
+    */
     const handleSearchInputToggle = () => {
         searchInputRef.current.focus();
         setSearchInputToggle(!searchInputToggle);
     };
 
+    /*
+        This function clears the search input
+        field by setting the field to an empty
+        string and dispatching an action to globally
+        clear the Redux search value.
+        It also redirects the user to the browse page.
+    */
     const clearSearchInputToggle = () => {
         setSearchInput("");
         dispatch(clearSearchInputValue());
         history.push("/browse");
     };
 
+    /*
+        This function takes care of input being
+        typed in the search field. It updates the
+        state of the search input and Redux store.
+        If the input has text, it goes to the search results
+        page and fetches results. Otherwise, it goes
+        back to the browse page.
+    */
     const handleSearchInput = event => {
         const { value } = event.target;
         setSearchInput(value);
