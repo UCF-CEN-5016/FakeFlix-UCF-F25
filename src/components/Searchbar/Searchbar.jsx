@@ -18,14 +18,15 @@ import useOutsideClick from "../../hooks/useOutsideClick";
  */
 
 const Searchbar = () => {
+ // Navigation hook and Redux dispatch function
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //  Internal State
+  //  Internal State to handle input and toggle
   const [searchInputToggle, setSearchInputToggle] = useState(false); 
   const [searchInput, setSearchInput] = useState(""); 
 
-  // Refs
+  // Refs to access SOM elements
   const searchbarRef = useRef();
   const searchInputRef = useRef(); 
 
