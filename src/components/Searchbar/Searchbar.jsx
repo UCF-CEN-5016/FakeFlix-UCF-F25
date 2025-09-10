@@ -11,15 +11,26 @@ import { FiSearch } from "react-icons/fi";
 import { RiCloseFill } from "react-icons/ri";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
+/**
+ * Searchbar component for searching movies from themoviedb database.
+ * @component
+ * @returns {JSX.Element} Searchbar UI component
+ */
+
 const Searchbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [searchInputToggle, setSearchInputToggle] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const searchbarRef = useRef();
-  const searchInputRef = useRef();
+
+  //  Internal State
+  const [searchInputToggle, setSearchInputToggle] = useState(false); // {boolean} - Tracks if the search bar is open/active.
+  const [searchInput, setSearchInput] = useState(""); // {string} - Current search input value
+
+  // Refs
+  const searchbarRef = useRef(); // Root container ref, used for outside click detection
+  const searchInputRef = useRef(); //  Input ref, used for focusing when toggled.
 
   /**
+   * Closes automatically on outside click (via useOutsideClick).
    * Close the search bar when clicking outside of it.
    *
    * Attaches an outside-click listener on `searchbarRef`.
@@ -101,7 +112,7 @@ const Searchbar = () => {
         <FiSearch size="1.5em" />
       </div>
 
-      {/* /The clear icon, which is only visible when the searchInputToggle is true and the length of the search input has a value(truthy) */}
+      {/* /The clear icon, which is only visible when the searchInputToggle is true and the length of the search input has a value */}
       <div
         className={`Searchbar--clear ${
           searchInputToggle && searchInput.length && "typing"
