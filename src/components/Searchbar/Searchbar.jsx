@@ -112,7 +112,7 @@ const Searchbar = () => {
         <FiSearch size="1.5em" />
       </div>
 
-      {/* /The clear icon, which is only visible via class `typing` when the searchInputToggle is true and the length of the search input has a value */}
+      {/* /The clear icon, which is only visible via class `typing` when the searchInputToggle is true and the length of the searchinput has a value */}
       <div
         className={`Searchbar--clear ${
           searchInputToggle && searchInput.length && "typing"
