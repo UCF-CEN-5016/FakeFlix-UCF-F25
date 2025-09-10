@@ -26,17 +26,40 @@ const Searchbar = () => {
     }
   });
 
+  /**
+   * Toggle the search bar's visibility and focus the input field.
+   *
+   * @function handleSearchInputToggle
+   * @returns {void}
+   */
   const handleSearchInputToggle = () => {
     searchInputRef.current.focus();
     setSearchInputToggle(!searchInputToggle);
   };
+  
 
+  /**
+   * Clear the search input, reset Redux search state, and redirect to /browse.
+   *
+   * @function clearSearchInputToggle
+   * @returns {void}
+   */
   const clearSearchInputToggle = () => {
     setSearchInput("");
     dispatch(clearSearchInputValue());
     history.push("/browse");
   };
 
+  /**
+   * Handle search input changes:
+   * - Updates local and Redux state.
+   * - If non-empty, navigates to `/search?q=<value>` and dispatches a search.
+   * - If empty, redirects to `/browse`.
+   *
+   * @function handleSearchInput
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The input change event.
+   * @returns {void}
+   */
   const handleSearchInput = (event) => {
     const { value } = event.target;
     setSearchInput(value);
@@ -61,6 +84,7 @@ const Searchbar = () => {
           searchInputToggle && "Searchbar--active"
         }`} // Dynamically applies an "active" class based on the `searchInputToggle` state.
       />
+
       <div className="Searchbar--toggler" onClick={handleSearchInputToggle}>
         <FiSearch size="1.5em" />
       </div>
