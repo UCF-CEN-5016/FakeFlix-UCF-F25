@@ -22,12 +22,12 @@ const Searchbar = () => {
   const dispatch = useDispatch();
 
   //  Internal State
-  const [searchInputToggle, setSearchInputToggle] = useState(false); // {boolean} - Tracks if the search bar is open/close.
-  const [searchInput, setSearchInput] = useState(""); // {string} - Current search input value
+  const [searchInputToggle, setSearchInputToggle] = useState(false); 
+  const [searchInput, setSearchInput] = useState(""); 
 
   // Refs
-  const searchbarRef = useRef(); // Root container ref, used for outside click detection
-  const searchInputRef = useRef(); // Input ref, used for focusing when toggled.
+  const searchbarRef = useRef();
+  const searchInputRef = useRef(); 
 
   /**
    * Close the search bar when clicking outside of it.
@@ -92,10 +92,8 @@ const Searchbar = () => {
     } else history.push("/browse");
   };
 
-  // The component's JSX structure.
   return (
     <div className="Searchbar" ref={searchbarRef}>
-      {/* Search input field */}
       <input
         type="text"
         placeholder="Search titles, people"
