@@ -17,7 +17,7 @@ const Auth = () => {
 	const authError = useSelector(selectAuthErrors);
 
 	return (
-    // Main container with page transition animations
+        // Main container with page transition animations
 		<motion.div
 			className="Auth"
 			variants={authPageFadeInVariants}
@@ -25,15 +25,15 @@ const Auth = () => {
 			animate="animate"
 			exit="exit"
 		>
-      {/* Opacity effect */}
+            {/* Opacity effect */}
 			<div className="Auth__opacityLayer" />
-      {/* Background image */}
+            {/* Background image */}
 			<div className="Auth__bgLayer" style={{ backgroundImage: `url(${SIGNIN_BGIMG_URL})` }} />
-      {/* Logo linking to home */}
+            {/* Logo linking to home */}
 			<Link to="/" className="Auth__logo">
 				<img className="Auth__logo--img" src={LOGO_URL} alt="Fakeflix_logo" />
 			</Link>
-      {/* Handles entrance/exit for the entire auth content */}
+            {/* Handles entrance/exit for the entire auth content */}
 			<motion.div
 				className="Auth__content"
 				variants={modalVariants}
@@ -41,28 +41,28 @@ const Auth = () => {
 				animate="visible"
 				exit="hidden"
 			>
-        {/* Staggered animations for child elements */}
+                {/* Staggered animations for child elements */}
 				<motion.div variants={staggerOne} initial="initial" animate="animate" exit="exit">
-          {/* Title fades in and up */}
+                    {/* Title fades in and up */}
 					<motion.h2 variants={authFadeInUpVariants} className="Auth__content--title">
-						{isSignedUp ? "Sign In" : "Sign Up"}
+				    	{isSignedUp ? "Sign In" : "Sign Up"}
 					</motion.h2>
-          {/* Conditional rendering of top text */}
+                    {/* Conditional rendering of top text */}
 					<motion.small variants={authFadeInUpVariants} className="Auth__content--disclaimer">
 						{`Pay attention: this is not the original Netflix ${isSignedUp ? "sign in" : "sign up"}. Don't insert your real credentials here!`}
 					</motion.small>
-          {/* Conditional rendering of SignIn or SignUp component */}
-          {isSignedUp ? <SignIn /> : <SignUp />}
-          {/* Display authentication errors if any */}
-          {authError && <motion.p variants={authFadeInUpVariants} className='Auth__content--errors'>{authError}</motion.p>}
-          {/* Divider line */}
+                    {/* Conditional rendering of SignIn or SignUp component */}
+                    {isSignedUp ? <SignIn /> : <SignUp />}
+                    {/* Display authentication errors if any */}
+                    {authError && <motion.p variants={authFadeInUpVariants} className='Auth__content--errors'>{authError}</motion.p>}
+                    {/* Divider line */}
 					<motion.hr variants={authFadeInUpVariants} className="Auth__content--divider" />
-          {/* Conditional rendering of bottom text */}
+                    {/* Conditional rendering of bottom text */}
 					<motion.small variants={authFadeInUpVariants} className="Auth__content--toggleView">
-              {isSignedUp
+                        {isSignedUp
 							? `Haven't you registered yet? `
 							: "Do you already have an account? "}
-            {/* Toggles the 'sign in' / 'sign up' state  */}
+                        {/* Toggles the 'sign in' / 'sign up' state */}
 						<span className="toggler" onClick={() => setIsSignedUp(!isSignedUp)}>
 							{isSignedUp ? "Sign Up" : "Sign In"}
 						</span>
