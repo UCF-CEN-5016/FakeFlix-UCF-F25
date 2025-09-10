@@ -9,7 +9,7 @@ import { LOGO_URL, SIGNIN_BGIMG_URL } from "../../requests.js";
 import { useSelector } from "react-redux";
 import { selectAuthErrors } from "../../redux/auth/auth.selectors";
 
-// Auth page for sign in and sign up views
+// Authentication page for sign in and sign up views
 const Auth = () => {
   // State to toggle between sign in and sign up
 	const [isSignedUp, setIsSignedUp] = useState(true);
