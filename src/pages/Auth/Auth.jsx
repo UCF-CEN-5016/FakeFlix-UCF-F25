@@ -52,14 +52,14 @@ const Auth = () => {
 						{`Pay attention: this is not the original Netflix ${isSignedUp ? "sign in" : "sign up"}. Don't insert your real credentials here!`}
 					</motion.small>
           {/* Conditional rendering of SignIn or SignUp component */}
-					{isSignedUp ? <SignIn /> : <SignUp />}
+          {isSignedUp ? <SignIn /> : <SignUp />}
           {/* Display authentication errors if any */}
-					{authError && <motion.p variants={authFadeInUpVariants} className='Auth__content--errors'>{authError}</motion.p>}
+          {authError && <motion.p variants={authFadeInUpVariants} className='Auth__content--errors'>{authError}</motion.p>}
           {/* Divider line */}
 					<motion.hr variants={authFadeInUpVariants} className="Auth__content--divider" />
           {/* Conditional rendering of bottom text */}
 					<motion.small variants={authFadeInUpVariants} className="Auth__content--toggleView">
-						{isSignedUp
+              {isSignedUp
 							? `Haven't you registered yet? `
 							: "Do you already have an account? "}
             {/* Toggles the 'sign in' / 'sign up' state  */}
