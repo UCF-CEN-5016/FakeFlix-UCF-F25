@@ -73,7 +73,8 @@ const Searchbar = () => {
   /**
    * Handle search input changes:
    * - Updates local and Redux value of the search input.
-   * - If non-empty, navigates to `/search?q=<value>` and dispatches an action to fetch search results.
+   * - If non-empty, navigates to `/search?q=<value>` and 
+   * - dispatches an action to fetch search results.
    * - If empty, redirects to `/browse` page.
    *
    * @function handleSearchInput
