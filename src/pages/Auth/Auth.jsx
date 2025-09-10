@@ -62,6 +62,7 @@ const Auth = () => {
 						{isSignedUp
 							? `Haven't you registered yet? `
 							: "Do you already have an account? "}
+            {/* Toggles the 'sign in' / 'sign up' state  */}
 						<span className="toggler" onClick={() => setIsSignedUp(!isSignedUp)}>
 							{isSignedUp ? "Sign Up" : "Sign In"}
 						</span>
