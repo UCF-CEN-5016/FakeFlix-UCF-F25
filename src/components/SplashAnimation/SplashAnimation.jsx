@@ -4,28 +4,41 @@ import { useHistory } from "react-router-dom";
 import { TADUM_SOUND_URL } from "../../requests";
 import { motion } from "framer-motion";
 
+// Controls the splash animation and "ta-dum" sound effect
+// that occurs upon loading/logging into FakeFlix
 const SplashAnimation = () => {
 
 	let history = useHistory();
 	const soundRef = useRef(null);
 
 	const soundNotification = () => {
+		// Plays the "ta-dum" sound effect upon loading FakeFlix
+
 		const sound = new Audio(TADUM_SOUND_URL);
 		const promise = sound.play();
 
+		// If sound fails to play (e.g., autoplay is blocked in the user's browser),
+		// logs the error
 		if (promise !== undefined) {
 			promise.then(() => {}).catch(error => console.error(error));
 		}
 	}
 
-	useEffect(() => {
-		setTimeout(() => {
+	useEffect(
+		// Calls soundNotification() to play "ta-dum" sound effect
+		// after 200 ms
+		() => {
+		setTimeout(
+			() => {
 			soundNotification();
 		}, 200)
-		setTimeout(() => {
+
+		// Redirects user to /browse after 5700 ms
+		setTimeout(
+			() => {
 			history.push('/browse')
 		}, 5700)
-	}, [history])
+	}, [history]) // note : passing history ensures this only runs once upon load
 
 	return (
 		<motion.div
