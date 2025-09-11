@@ -1,3 +1,6 @@
+// This file defines the MyList element for the page displaying to the user their saved favorite movies/shows list as found in the cache.
+// It uses the Poster components in order to render the movie details.
+
 import "./myList.scss"
 import Poster from "../../components/Poster/Poster";
 import Credits from "../../components/Credits/Credits";
