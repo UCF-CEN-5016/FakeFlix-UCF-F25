@@ -11,7 +11,10 @@ import { selectAuthLoadingState } from "../../redux/auth/auth.selectors";
 /*
 	The overall functionality of SignUp.jsx is to:
 
-	1. ...
+	1. 	Provide code for transferring and preserving form submission data via the Redux store
+		and dispatch handler
+	2.	Submit data to the server via the dispatch handler
+	3.	Set up the HTML structure needed to display the signup form to the user
 */
 
 const SignUp = () => {
@@ -23,20 +26,28 @@ const SignUp = () => {
 		mode: "onTouched"
 	})
 
-	// Sends inputted data to web server via node dispatch function when called
+	// Sends inputted data to web server via dispatch function when called
 	const onSubmit = data => {
 		const { displayName, email, password } = data;
 		dispatch(signUpStart({ displayName, email, password }));
 	}
 
 	/*
-		This section contains the HTML elements for the following features:
+		The following section contains the HTML elements for the following features:
 
-		1. SignUp form
-		2. Name input field (text)
-		3. Email input field (text)
-		4. Password entry (text) and confirmation (text) fields
-		5. Form submission (button)
+		1. 	SignUp__form: Handles overall form setup. This allows the entries in the forms to be
+			sent to the submission handler.
+		2. 	Name input field: Div wrapper containing a text field for a name. Must be between 2-60
+			characters.
+		3. 	Email input field: Div wrapper containing a text field for a valid email. It detects
+			the email format by only accepting char sequences of [text]@[text].[text].
+		4. 	Password entry field: Div wrapper containing a field for a password. The div uses
+			the password type to hide the entered characters, and the password must be between
+			6-30 characters.
+		5.	Password confirmation field: Div wrapper containing a field for password confirmation.
+			Same criteria as the password entry field, except it must match the previous field.
+		6. 	Form submission button: When clicked, signals to SignUp__form that the user is ready
+			to submit entered information to the server, executing handleSubmit.
 	*/
 	return (
 		<motion.form
