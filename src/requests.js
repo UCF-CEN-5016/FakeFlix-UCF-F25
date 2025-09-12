@@ -42,7 +42,7 @@ const requests = {
 	fetchSearchQuery: `/search/multi?api_key=${REACT_APP_API_KEY}&language=${LANG}&query=`,
 	// template for query used to fetch all movies and shows which are trending 
 	fetchTrendingAll: `/trending/all/week?api_key=${REACT_APP_API_KEY}&sort_by=popularity.desc&language=${LANG}`,
-	// template for query used to fetch movies and shows which released winthin the last month
+	// template for query used to fetch movies which released within the last month
 	fetchReleasedMoviesByOneMonth: `/discover/movie?api_key=${REACT_APP_API_KEY}&primary_release_date.gte=${ONEMONTHAGO}&sort_by=popularity.desc&language=${LANG}`,
     
 	/*===== Movies =====*/
