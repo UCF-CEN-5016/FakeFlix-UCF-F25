@@ -1,5 +1,8 @@
+
+
 import "./inputField.scss"
 
+//This is the only function in the file. The high-level summary is that it takes in a variety of specifications as inputs, and returns formatted html to display the InputField specified. A variety of inputs allow for specificity; this can include an input field name, placeholder text for the input field, different types of input field for different types of data, a validation/errors/validation message to require input to follow a certain format if desired, and a disabled option for fields that should not actually be used. The additionalClass input is used to select special css rendering options in addition to those defined in the imported inputField.scss file, increasing formatting flexibility.
 const InputField = ({
     type,
     placeholder,
