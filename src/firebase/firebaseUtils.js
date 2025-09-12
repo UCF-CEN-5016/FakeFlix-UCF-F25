@@ -1,3 +1,6 @@
+/*
+    Summary of whole thing
+*/
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
@@ -18,13 +21,17 @@ const firebaseConfig = {
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
 
+    // Is this a function?
     const userRef = firestore.doc(`users/${userAuth.uid}`);
+    // Is this a function?
     const snapShot = await userRef.get();
 
     if (!snapShot.exists) {
         const { displayName, email, photoURL } = userAuth;
+        // Is this a function?
         const createdAt = new Date();
         try {
+            // Is this a function?
             await userRef.set({
                 displayName,
                 email,
@@ -33,6 +40,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 ...additionalData,
             })
         } catch (error) {
+            // Is this a function?
             console.log("error creating user", error.message)
         }
     }
@@ -41,7 +49,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 }
 
 export const getCurrentUser = () => {
+    // Is this a function?
     return new Promise((resolve, reject) => {
+        // Is this a function?
         const unsubscribe = auth.onAuthStateChanged(userAuth => {
             unsubscribe();
             resolve(userAuth);
@@ -52,12 +62,17 @@ export const getCurrentUser = () => {
 // Firebase web app init
 firebase.initializeApp(firebaseConfig)
 
+// Is this a function?
 export const auth = firebase.auth()
+// Is this a function?
 export const firestore = firebase.firestore()
 
 // Sign in With Google Setup with popup
+// Is this a function?
 export const googleProvider = new firebase.auth.GoogleAuthProvider()
+// Is this a function?
 googleProvider.setCustomParameters({ prompt: "select_account" })
+// Is this a function?
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider)
 
 export default firebase
