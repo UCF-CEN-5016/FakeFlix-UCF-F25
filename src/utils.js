@@ -7,6 +7,7 @@ export const getOneMonthAgoReleaseDate = () => {
     return formattedDate;
 }
 
+// Takes argument of date and returns the year in this format: YYYY
 export const dateToYearOnly = date => date.slice(0,4);
 
 export const capitalizeFirstLetter = text => (
