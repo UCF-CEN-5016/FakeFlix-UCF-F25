@@ -1,5 +1,8 @@
 /*
-    Summary of whole thing
+    This file stores important functionality for basic client-service
+    interaction. A connection to Firebase is established and is used to
+    update a user's profile, check for login/logout activity, and provide
+    basic user authentication.
 */
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
@@ -18,20 +21,25 @@ const firebaseConfig = {
     measurementId: REACT_APP_FIREBASE_MEASUREMEMT_ID
 }
 
+/*
+    Endpoint which takes in user authentication and data,
+    returns with a new user profile to be linked with the user itself
+*/
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
 
-    // Is this a function?
+    // Is Gets user information from Firebase database
     const userRef = firestore.doc(`users/${userAuth.uid}`);
-    // Is this a function?
+    // Can return a Document Snapshot linked to user or an undefined object
+    // Next if-statements checks if it returned a valid snapshot or not
     const snapShot = await userRef.get();
 
     if (!snapShot.exists) {
         const { displayName, email, photoURL } = userAuth;
-        // Is this a function?
+        // Construction call which gets us the current date
         const createdAt = new Date();
         try {
-            // Is this a function?
+            // Edits userRef with data passed from endpoint parameters
             await userRef.set({
                 displayName,
                 email,
@@ -40,7 +48,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 ...additionalData,
             })
         } catch (error) {
-            // Is this a function?
+            // Display error message in the event no snapshot is detected
             console.log("error creating user", error.message)
         }
     }
@@ -48,10 +56,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return userRef;
 }
 
+// Checks for login/logout state changes in user
 export const getCurrentUser = () => {
-    // Is this a function?
+    // Lets the unsubscribe check be performed async
     return new Promise((resolve, reject) => {
-        // Is this a function?
+        // Listens for any changes in logged in/logged out states in Firebase
         const unsubscribe = auth.onAuthStateChanged(userAuth => {
             unsubscribe();
             resolve(userAuth);
@@ -62,17 +71,16 @@ export const getCurrentUser = () => {
 // Firebase web app init
 firebase.initializeApp(firebaseConfig)
 
-// Is this a function?
+// Make calls to access firebase auth and firestore and store to local vars
 export const auth = firebase.auth()
-// Is this a function?
 export const firestore = firebase.firestore()
 
 // Sign in With Google Setup with popup
-// Is this a function?
+// Use constructor to create and save GoogleAuthProvider object
 export const googleProvider = new firebase.auth.GoogleAuthProvider()
-// Is this a function?
+// Edit our new auth provider object
 googleProvider.setCustomParameters({ prompt: "select_account" })
-// Is this a function?
+// Let's user authenticate by signing in with Google account
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider)
 
 export default firebase
