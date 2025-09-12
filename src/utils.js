@@ -1,3 +1,4 @@
+// Returns the the date a month ago in this format: YYYY-MM-DD
 export const getOneMonthAgoReleaseDate = () => {
     let date = new Date();
     date.setMonth(date.getMonth() - 1);
