@@ -1,4 +1,4 @@
-
+//The purpose of the file is to define and export the function InputField. The idea is to take in certain specifications for the appearance and allowed inputs of an input field, i.e. a place where a user can input text. The file does not deal with processing inputs themselves, and simply focuses on structuring the boxes where said inputs are placed.
 
 import "./inputField.scss"
 
