@@ -1,3 +1,10 @@
+/*
+	Row.jsx Summary:
+	This component displays a responsive, swipeable horizontal row of movie or TV show posters using the Swiper library.
+	It fetches media data from the Redux store, handles loading and error states, and renders each poster as a slide.
+	The row adapts to different screen sizes, provides navigation buttons, and applies special styling to edge items.
+*/
+
 import "./row.scss";
 import RowPoster from "../RowPoster/RowPoster";
 import SkeletonElement from "../SkeletonElement/SkeletonElement";
@@ -19,7 +26,7 @@ SwiperCore.use([Navigation, Pagination]);
 
 
 /**
- * Row Component - Renders a slidable horizontal row of items using Swiper
+ * Row Component - Renders a horizontal row of items using Swiper
  *
  * @param {Function} selector - Redux selector function to fetch row data
  * @param {string} title - Title displayed above the horizontal row
