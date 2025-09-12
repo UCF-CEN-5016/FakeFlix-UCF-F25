@@ -1,3 +1,8 @@
+/*
+This file contains multiple utility functions that perfom various tasks
+that can be used in different parts of the code to avoid repetition of the same code.
+*/
+
 // Returns the the date a month ago in this format: YYYY-MM-DD
 export const getOneMonthAgoReleaseDate = () => {
     let date = new Date();
