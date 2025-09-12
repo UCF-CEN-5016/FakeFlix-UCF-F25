@@ -17,13 +17,23 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 SwiperCore.use([Navigation, Pagination]);
 
+
+/**
+ * Row Component - Renders a slidable horizontal row of items using Swiper
+ *
+ * @param {Function} selector - Redux selector function to fetch row data
+ * @param {string} title - Title displayed above the horizontal row
+ * @param {string} genre - Genre identifier used for navigation links
+ * @param {boolean} isLarge - Whether to display posters in large format
+ * @returns {JSX.Element} - A row component
+ */
 const Row = ({ selector, title, genre, isLarge }) => {
 	const { width } = useViewport();
 	const rowData = useSelector(selector);
 	const { loading, error, data: results } = rowData;
 	const { pathname } = useLocation();
 
-	//Custom Swiper config
+	// Custom Swiper config
 	const navigationPrevRef = useRef(null);
 	const navigationNextRef = useRef(null);
     const customSwiperParams = {
@@ -51,15 +61,40 @@ const Row = ({ selector, title, genre, isLarge }) => {
 		allowTouchMove: true
     };
 
+	/**
+     * Handles mouse over event on row items to add positioning classes
+     * 
+     * @param {Event} e - Mouse event object
+     * Adds 'is-right' or 'is-left' class to parent element based on current item position
+     */
 	const rightMouseOver = (e) => {
 		if (e.currentTarget.classList.contains('right')) {e.currentTarget.parentElement.classList.add('is-right')}
 		else if (e.currentTarget.classList.contains('left')) {e.currentTarget.parentElement.classList.add('is-left')}
 	}
 
+	/**
+     * Handles mouse out event on row items to remove positioning classes
+     * 
+     * @param {Event} e - Mouse event object
+     * Removes 'is-right' and 'is-left' classes from parent element
+     */
 	const rightMouseOut = (e) => {
 		e.currentTarget.parentElement.classList.remove('is-right', 'is-left')
 	}
 
+	/**
+	 * Determines the position class name for each slide based on its index and viewport width
+	 * 
+     * @param {Number} index - The row item's index in the array
+     * @returns {String|undefined} - Position class name or undefined
+	 *
+	 * This function helps apply special styling to the edge items in the row.
+	 * It handles responsive behavior by using different position logic based on viewport width:
+	 * - For very large screens (≥1378px): Every 6th item (end of row) gets 'right', following item gets 'left'
+	 * - For medium screens (≥998px): Every 4th item gets 'right', following item gets 'left'
+	 * - For smaller screens (≥768px): Every 3rd item gets 'right', following item gets 'left'
+	 * - First item always gets 'left' class, 20th item always gets 'right' class
+     */
 	const insertPositionClassName = (index) => {
 		const i = index + 1
 
