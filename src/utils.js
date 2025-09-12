@@ -15,6 +15,7 @@ export const capitalizeFirstLetter = text => (
     text.charAt(0).toUpperCase() + text.slice(1)
 );
 
+// Take a data structure (that has .length) and get an integer between -1 & data.length - 2
 export const randomize = data => (
     Math.floor(Math.random() * data.length - 1)
 );
