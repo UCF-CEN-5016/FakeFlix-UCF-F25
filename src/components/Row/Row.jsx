@@ -1,3 +1,10 @@
+/*
+	Row.jsx Summary:
+	This component displays a responsive, swipeable horizontal row of movie or TV show posters using the Swiper library.
+	It fetches media data from the Redux store, handles loading and error states, and renders each poster as a slide.
+	The row adapts to different screen sizes, provides navigation buttons, and applies special styling to edge items.
+*/
+
 import "./row.scss";
 import RowPoster from "../RowPoster/RowPoster";
 import SkeletonElement from "../SkeletonElement/SkeletonElement";
@@ -17,13 +24,23 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 SwiperCore.use([Navigation, Pagination]);
 
+
+/**
+ * Row Component - Renders a horizontal row of items using Swiper
+ *
+ * @param {Function} selector - Redux selector function to fetch row data
+ * @param {string} title - Title displayed above the horizontal row
+ * @param {string} genre - Genre identifier used for navigation links
+ * @param {boolean} isLarge - Whether to display posters in large format
+ * @returns {JSX.Element} - A row component
+ */
 const Row = ({ selector, title, genre, isLarge }) => {
 	const { width } = useViewport();
 	const rowData = useSelector(selector);
 	const { loading, error, data: results } = rowData;
 	const { pathname } = useLocation();
 
-	//Custom Swiper config
+	// Custom Swiper config
 	const navigationPrevRef = useRef(null);
 	const navigationNextRef = useRef(null);
     const customSwiperParams = {
@@ -51,15 +68,40 @@ const Row = ({ selector, title, genre, isLarge }) => {
 		allowTouchMove: true
     };
 
+	/**
+     * Handles mouse over event on row items to add positioning classes
+     * 
+     * @param {Event} e - Mouse event object
+     * Adds 'is-right' or 'is-left' class to parent element based on current item position
+     */
 	const rightMouseOver = (e) => {
 		if (e.currentTarget.classList.contains('right')) {e.currentTarget.parentElement.classList.add('is-right')}
 		else if (e.currentTarget.classList.contains('left')) {e.currentTarget.parentElement.classList.add('is-left')}
 	}
 
+	/**
+     * Handles mouse out event on row items to remove positioning classes
+     * 
+     * @param {Event} e - Mouse event object
+     * Removes 'is-right' and 'is-left' classes from parent element
+     */
 	const rightMouseOut = (e) => {
 		e.currentTarget.parentElement.classList.remove('is-right', 'is-left')
 	}
 
+	/**
+	 * Determines the position class name for each slide based on its index and viewport width
+	 * 
+     * @param {Number} index - The row item's index in the array
+     * @returns {String|undefined} - Position class name or undefined
+	 *
+	 * This function helps apply special styling to the edge items in the row.
+	 * It handles responsive behavior by using different position logic based on viewport width:
+	 * - For very large screens (≥1378px): Every 6th item (end of row) gets 'right', following item gets 'left'
+	 * - For medium screens (≥998px): Every 4th item gets 'right', following item gets 'left'
+	 * - For smaller screens (≥768px): Every 3rd item gets 'right', following item gets 'left'
+	 * - First item always gets 'left' class, 20th item always gets 'right' class
+     */
 	const insertPositionClassName = (index) => {
 		const i = index + 1
 
@@ -81,13 +123,16 @@ const Row = ({ selector, title, genre, isLarge }) => {
 	return (
 		<div className="Row">
 			{error && <div className='Row__not-loaded'>Oops, an error occurred.</div>}
+
 			{loading ?
 				(
+					// Show skeleton loading placeholders while data is loading
 					<div className='Row__not-loaded'>
 						<SkeletonElement type="title" />
 						<SkeletonPoster />
 					</div>
 				) : (
+					// Show title with link to full genre page when data is loaded
 					<h3 className="Row__title">
 						<Link to={`${pathname}/${genre}`}>
 							<span>{title}</span>
@@ -96,21 +141,27 @@ const Row = ({ selector, title, genre, isLarge }) => {
 					</h3>
 				)
 			}
+			{/* Render row when data is loaded and no errors */}
 			{!loading && !error && (
 				<div className="Row__poster--wrp">
+
+					{/* Left and right navigation buttons*/}
 					<div className="Row__slider--mask left" ref={navigationPrevRef}>
 						<MdChevronLeft className="Row__slider--mask-icon left" size="3em" style={{ color:'white' }} />
 					</div>
 					<div className="Row__slider--mask right" ref={navigationNextRef}>
 						<MdChevronRight className="Row__slider--mask-icon right" size="3em" style={{ color:'white' }} />
 					</div>
+
+					{/* Swiper container for horizontal sliding using custom config */}
 					<Swiper
 						{...customSwiperParams}
 						onBeforeInit={(swiper) => {
 							swiper.params.navigation.prevEl = navigationPrevRef.current;
 							swiper.params.navigation.nextEl = navigationNextRef.current;
 						}}
-					>
+					>	
+						{/* Map through results to create a slide for each item */}
 						{!loading &&
 							results &&
 							results.map((result, i) => (
@@ -120,6 +171,7 @@ const Row = ({ selector, title, genre, isLarge }) => {
 									onMouseOver={rightMouseOver}
 									onMouseOut={rightMouseOut}
 								>
+									{/* Render the poster component for each item */}
 									<RowPoster
 										item={result}
 										isLarge={isLarge}
