@@ -116,13 +116,16 @@ const Row = ({ selector, title, genre, isLarge }) => {
 	return (
 		<div className="Row">
 			{error && <div className='Row__not-loaded'>Oops, an error occurred.</div>}
+
 			{loading ?
 				(
+					// Show skeleton loading placeholders while data is loading
 					<div className='Row__not-loaded'>
 						<SkeletonElement type="title" />
 						<SkeletonPoster />
 					</div>
 				) : (
+					// Show title with link to full genre page when data is loaded
 					<h3 className="Row__title">
 						<Link to={`${pathname}/${genre}`}>
 							<span>{title}</span>
@@ -131,21 +134,27 @@ const Row = ({ selector, title, genre, isLarge }) => {
 					</h3>
 				)
 			}
+			{/* Render row when data is loaded and no errors */}
 			{!loading && !error && (
 				<div className="Row__poster--wrp">
+
+					{/* Left and right navigation buttons*/}
 					<div className="Row__slider--mask left" ref={navigationPrevRef}>
 						<MdChevronLeft className="Row__slider--mask-icon left" size="3em" style={{ color:'white' }} />
 					</div>
 					<div className="Row__slider--mask right" ref={navigationNextRef}>
 						<MdChevronRight className="Row__slider--mask-icon right" size="3em" style={{ color:'white' }} />
 					</div>
+
+					{/* Swiper container for horizontal sliding using custom config */}
 					<Swiper
 						{...customSwiperParams}
 						onBeforeInit={(swiper) => {
 							swiper.params.navigation.prevEl = navigationPrevRef.current;
 							swiper.params.navigation.nextEl = navigationNextRef.current;
 						}}
-					>
+					>	
+						{/* Map through results to create a slide for each item */}
 						{!loading &&
 							results &&
 							results.map((result, i) => (
@@ -155,6 +164,7 @@ const Row = ({ selector, title, genre, isLarge }) => {
 									onMouseOver={rightMouseOver}
 									onMouseOut={rightMouseOut}
 								>
+									{/* Render the poster component for each item */}
 									<RowPoster
 										item={result}
 										isLarge={isLarge}
