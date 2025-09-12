@@ -10,6 +10,7 @@ export const getOneMonthAgoReleaseDate = () => {
 // Takes argument of date and returns the year in this format: YYYY
 export const dateToYearOnly = date => date.slice(0,4);
 
+// Takes argument of string and returns string with the first letter capitalized
 export const capitalizeFirstLetter = text => (
     text.charAt(0).toUpperCase() + text.slice(1)
 );
