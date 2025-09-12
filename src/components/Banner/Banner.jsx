@@ -47,12 +47,12 @@ const Banner = ({ type }) => {
   const description = truncate(finalData?.overview, 150);
   const dispatch = useDispatch();
 
-  // Add Comment
+  // Prevent the "Play" click from affecting parent events and animations
   const handlePlayAnimation = (event) => {
     event.stopPropagation();
   };
 
-  // Add Comment
+  // Open modal using Redux dispatch with the data and fallbackTitle
   const handleModalOpening = () => {
     dispatch(showModalDetail({ ...finalData, fallbackTitle }));
   };
