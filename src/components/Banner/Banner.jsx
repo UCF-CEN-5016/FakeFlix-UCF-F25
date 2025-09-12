@@ -1,6 +1,3 @@
-/*
-	Comment Here
-*/
 import "./banner.scss";
 import React from "react";
 import { motion } from "framer-motion";
@@ -24,7 +21,10 @@ import {
 } from "../../redux/movies/movies.selectors";
 import { selectNetflixSeries } from "../../redux/series/series.selectors";
 
-// Add Comment
+/* Banner Component:
+	- Displays a randomized movie/series title, description, background image, and buttons ("Play" & "More Info")
+	- Data is pulled from Redux based on "type" prop ("movies", "series", or default)
+*/
 const Banner = ({ type }) => {
   let selector;
   switch (type) {
