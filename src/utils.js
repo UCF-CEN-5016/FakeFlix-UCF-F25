@@ -20,6 +20,7 @@ export const randomize = data => (
     Math.floor(Math.random() * data.length - 1)
 );
 
+// Ensure text is at most size n, if not then truncate (... counts as 1 character for n)
 export const truncate = (text, n) => (
     text?.length > n ? text.substr(0, n - 1) + "..." : text
 );
