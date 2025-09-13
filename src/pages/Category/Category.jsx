@@ -1,3 +1,13 @@
+/* 
+ * File summary:
+ * - Shows a page of movies/shows for a chosen category.
+ * - Figures out which category to load from the URL.
+ * - Reads data (list/loading/error) from Redux using a selector provided by a custom hook.
+ * - Renders Poster cards, shows skeletons while loading, and an error message on failure.
+ * - Adds an invisible "sentinel" at the bottom to load more items when scrolled into view (infinite scroll).
+ */
+
+
 import "./category.scss"
 import Poster from "../../components/Poster/Poster";
 import SkeletonPage from "../../components/SkeletonPage/SkeletonPage";
@@ -9,6 +19,15 @@ import { useRetrieveCategory } from "../../hooks/useRetrieveCategory";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useLazyLoad from "../../hooks/useLazyLoad";
+
+/*
+ * Category component:
+ * - Manages the current "page" for pagination.
+ * - Determines the category from the route.
+ * - Uses a custom hook to get category metadata (title + Redux selector).
+ * - Selects the category data from Redux and renders it.
+ * - Sets up lazy loading to fetch more when the user scrolls down.
+ */
 
 const Category = ({ match }) => {
     const [page, setPage] = useState(2);
