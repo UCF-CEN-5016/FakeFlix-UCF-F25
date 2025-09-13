@@ -22,8 +22,8 @@ import { defaultPageFadeInVariants } from "../../motionUtils";
 
 
 const Movies = () => {
-    // Retrieve configuration objects for each movie category (row).
-    // Each config includes a Redux selector and metadata used by the Row component.
+   // Pull structured row configs (ids, selectors, titles, etc.) for the Movies page.
+    // These configs are derived from `fetchMovieDataConfig` and power each <Row />.
     const rows = useRetrieveData('movies');
 
     return (
@@ -33,8 +33,8 @@ const Movies = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            //Render a hero banner featuring a random trending movie.
-            //Loop through each row configuration and render the corresponding Row. Spread the configuration object so that Row receives all required props: id, title, genre, selector, and isLarge.
+            // Hero banner for Movies. With type='movies', Banner selects trending movies from Redux (selectTrendingMovies), randomizes one item, truncates its overview, shows Play/More Info actions, and uses BASE_IMG_URL for backdrop. 
+            //Render one Row per config. Each config includes:- title/genre: used for the section header and route link (/movies/:genre) - selector: Redux selector Row uses to read {loading, error, data}- isLarge: optional larger poster style for certain rows (e.g., Originals)The Row handles skeletons, Swiper navigation, and responsive breakpoints. 
             //Display footer credits acknowledging the developer th3wall
         >
             <Banner type='movies' />
