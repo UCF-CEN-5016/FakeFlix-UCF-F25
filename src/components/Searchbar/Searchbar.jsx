@@ -1,3 +1,18 @@
+/**
+ * Searchbar
+ *
+ * What this component does (in normal words):
+ * - Shows a search box when you click the magnifying glass.
+ * - As you type, it saves the text and takes you to the Search page.
+ * - If you clear the text, it takes you back to Browse.
+ * - Clicking anywhere outside the search box closes it.
+ *
+ * Tips:
+ * - We keep the current text in local state (for the input box)
+ *   and also send it to Redux (so other parts of the app can use it).
+ * - We use react-router to move between pages.
+ */
+
 import { useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { RiCloseFill } from "react-icons/ri";
