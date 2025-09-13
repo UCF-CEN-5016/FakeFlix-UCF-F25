@@ -1,3 +1,19 @@
+/**
+ * Movies page component for FakeFlix.
+ *
+ * - Retrieves row configurations via `useRetrieveData('movies')`. Under the hood,
+ *   this selects `fetchMovieDataConfig` (see dataConfig.js), dispatches each
+ *   row’s thunk (e.g., fetchTrendingMoviesAsync) with its endpoint, and returns
+ *   metadata (id/title/genre/selector/isLarge) for rendering.
+ * - Displays a Banner configured for movies (random trending pick + actions).
+ * - Maps each row config to a <Row />. Row uses the provided `selector` to
+ *   read its Redux slice (loading/error/results) and renders a Swiper carousel.
+ * - Adds Credits at the bottom. The whole page is wrapped in a motion.div that
+ *   applies `defaultPageFadeInVariants` for page transitions.
+ */
+
+
+
 // Movies page component for FakeFlix.
 // fade‑in animations via Framer Motion.
 import "./movies.scss"
