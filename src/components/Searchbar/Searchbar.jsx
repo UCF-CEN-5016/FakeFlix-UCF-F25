@@ -8,14 +8,24 @@ import { changeSearchInputValue, clearSearchInputValue, fetchSearchResultsAsync 
 import "./searchbar.scss";
 
 const Searchbar = () => {
-
+    // Lets us change the page in code (go to /search or /browse).
     const history = useHistory();
+
+    // Lets us send actions to Redux (save text, clear text, fetch results).
     const dispatch = useDispatch();
+
+    // If true, the input is “open/visible”. If false, it’s hidden.
     const [searchInputToggle, setSearchInputToggle] = useState(false);
+
+    // The actual text the user typed in the box.
     const [searchInput, setSearchInput] = useState("");
+
+    // We use these to 1) detect clicks outside the whole searchbar
+    // and 2) focus the input when it opens.
     const searchbarRef = useRef();
     const searchInputRef = useRef();
 
+    // If the user clicks outside the search area, close the input and clear text.
     useOutsideClick(searchbarRef, () => {
         if (searchInputToggle) {
             setSearchInput("");
@@ -59,6 +69,8 @@ const Searchbar = () => {
     };
     return (
         <div className="Searchbar" ref={searchbarRef}>
+            {/* The text box the user types in.
+          We add a CSS class when it’s open to style it differently. */}
             <input
                 type="text"
                 placeholder="Search titles, people"
@@ -67,12 +79,16 @@ const Searchbar = () => {
                 ref={searchInputRef}
                 className={`Searchbar--search ${searchInputToggle && "Searchbar--active"}`}
             />
+
+            {/* Button to open/close the search box */}
             <div
                 className="Searchbar--toggler"
                 onClick={handleSearchInputToggle}
             >
                 <FiSearch size="1.5em" />
             </div>
+
+            {/* Clear button. It shows the “typing” style only when open AND not empty. */}
             <div
                 className={`Searchbar--clear ${searchInputToggle && searchInput.length && "typing"}`}
                 onClick={clearSearchInputToggle}
@@ -80,7 +96,7 @@ const Searchbar = () => {
                 <RiCloseFill />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Searchbar
+export default Searchbar;
