@@ -12,7 +12,10 @@ import { useRetrieveData } from "../../hooks/useRetrieveData";
 import { motion } from "framer-motion";
 import { defaultPageFadeInVariants } from "../../motionUtils";
 
+
 const Movies = () => {
+    // Retrieve configuration objects for each movie category (row).
+    // Each config includes a Redux selector and metadata used by the Row component.
     const rows = useRetrieveData('movies');
 
     return (
@@ -22,6 +25,8 @@ const Movies = () => {
             initial="initial"
             animate="animate"
             exit="exit"
+            //Render a hero banner featuring a random trending movie.
+            //Loop through each row configuration and render the corresponding Row. Spread the configuration object so that Row receives all required props: id, title, genre, selector, and isLarge.
         >
             <Banner type='movies' />
             {rows && rows.map(props => (
@@ -31,5 +36,4 @@ const Movies = () => {
         </motion.div>
     )
 }
-
 export default Movies
